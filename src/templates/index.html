@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Kawaii Warehouse - Home{% endblock %}
+{% block title %}{% if theme == 'gothic' %}Gothic Warehouse{% else %}Kawaii Warehouse{% endif %} - Home{% endblock %}
 
 {% block content %}
 <div class="card">
@@ -21,7 +21,7 @@
                 <div class="progress-fill" style="width: {{ fill_percent }}%"></div>
             </div>
             <div class="action-buttons">
-                <a href="{{ url_for('view_warehouse', warehouse_id=warehouse_id) }}" class="btn btn-primary">View 👀</a>
+                <a href="{{ url_for('view_warehouse', warehouse_id=warehouse_id) }}" class="btn btn-primary">View {% if theme == 'gothic' %}🔮{% else %}👀{% endif %}</a>
             </div>
         </div>
         {% endfor %}
@@ -29,8 +29,8 @@
     {% else %}
     <div class="empty-state">
         <p>No warehouses yet!</p>
-        <p>Create your first kawaii warehouse ✨</p>
-        <a href="{{ url_for('create_warehouse') }}" class="btn btn-primary" style="margin-top: 20px;">Create Warehouse 🎀</a>
+        <p>Create your first {% if theme == 'gothic' %}dark{% else %}kawaii{% endif %} warehouse {% if theme == 'gothic' %}🕯️{% else %}✨{% endif %}</p>
+        <a href="{{ url_for('create_warehouse') }}" class="btn btn-primary" style="margin-top: 20px;">Create Warehouse {% if theme == 'gothic' %}⚰️{% else %}🎀{% endif %}</a>
     </div>
     {% endif %}
 </div>

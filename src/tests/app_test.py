@@ -133,3 +133,14 @@ class TestFlaskApp(unittest.TestCase):
     def test_edit_nonexistent_warehouse(self):
         response = self.client.get('/warehouse/999/edit')
         self.assertEqual(response.status_code, 302)
+
+    def test_toggle_theme_to_gothic(self):
+        response = self.client.get('/toggle-theme', follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b'Gothic Warehouse', response.data)
+
+    def test_toggle_theme_back_to_kawaii(self):
+        self.client.get('/toggle-theme')
+        response = self.client.get('/toggle-theme', follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b'Kawaii Warehouse', response.data)
