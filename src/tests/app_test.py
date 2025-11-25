@@ -1,6 +1,4 @@
 import unittest
-import sys
-sys.path.insert(0, '/home/runner/work/ohtuvarasto/ohtuvarasto/src')
 from app import app, warehouse_store
 
 

@@ -30,7 +30,8 @@ def handle_create_post():
             "name": name,
             "varasto": Varasto(capacity, initial_balance)
         }
-
+        return True
+    return False
 
 @app.route("/")
 def index():
@@ -110,4 +111,4 @@ def delete_warehouse(warehouse_id):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
