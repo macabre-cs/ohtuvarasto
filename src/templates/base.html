@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% if theme == 'gothic' %}Gothic Warehouse{% else %}Kawaii Warehouse{% endif %}{% endblock %}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* ===== KAWAII THEME ===== */
+        body.kawaii {
+            font-family: 'Comic Sans MS', 'Chalkboard', cursive;
+            background: linear-gradient(135deg, #ffeef8 0%, #fff0f5 50%, #ffe4ec 100%);
+            min-height: 100vh;
+            color: #d63384;
+        }
+
+        .kawaii header {
+            text-align: center;
+            padding: 30px 0;
+            background: linear-gradient(to right, #ffb6c1, #ff69b4, #ffb6c1);
+            border-radius: 0 0 50px 50px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+        }
+
+        .kawaii header h1 {
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            font-size: 2.5em;
+        }
+
+        .kawaii header h1::before {
+            content: "🌸 ";
+        }
+
+        .kawaii header h1::after {
+            content: " 🌸";
+        }
+
+        .kawaii nav a {
+            display: inline-block;
+            background: white;
+            color: #ff69b4;
+            padding: 10px 25px;
+            margin: 5px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(255, 105, 180, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .kawaii nav a:hover {
+            background: #fff0f5;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+        }
+
+        .kawaii .card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 4px 20px rgba(255, 105, 180, 0.15);
+            border: 2px solid #ffb6c1;
+        }
+
+        .kawaii .card h2 {
+            color: #ff69b4;
+            margin-bottom: 15px;
+            border-bottom: 2px dashed #ffb6c1;
+            padding-bottom: 10px;
+        }
+
+        .kawaii .card h2::before {
+            content: "✨ ";
+        }
+
+        .kawaii .btn-primary {
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+        }
+
+        .kawaii .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 105, 180, 0.5);
+        }
+
+        .kawaii .btn-secondary {
+            background: white;
+            color: #ff69b4;
+            border: 2px solid #ff69b4;
+        }
+
+        .kawaii .btn-secondary:hover {
+            background: #fff0f5;
+        }
+
+        .kawaii .form-group label {
+            color: #d63384;
+        }
+
+        .kawaii .form-group input {
+            border: 2px solid #ffb6c1;
+        }
+
+        .kawaii .form-group input:focus {
+            border-color: #ff69b4;
+            box-shadow: 0 0 10px rgba(255, 105, 180, 0.2);
+        }
+
+        .kawaii .warehouse-card {
+            background: white;
+            border: 2px solid #ffb6c1;
+            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.15);
+        }
+
+        .kawaii .warehouse-card:hover {
+            box-shadow: 0 8px 25px rgba(255, 105, 180, 0.25);
+        }
+
+        .kawaii .warehouse-card h3 {
+            color: #ff69b4;
+        }
+
+        .kawaii .warehouse-card h3::before {
+            content: "📦 ";
+        }
+
+        .kawaii .warehouse-info {
+            background: #fff5f8;
+        }
+
+        .kawaii .progress-bar {
+            background: #ffe4ec;
+        }
+
+        .kawaii .progress-fill {
+            background: linear-gradient(to right, #ffb6c1, #ff69b4);
+        }
+
+        .kawaii .empty-state {
+            color: #d63384;
+        }
+
+        .kawaii .empty-state::before {
+            content: "🌺";
+            font-size: 3em;
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        .kawaii footer {
+            color: #ff69b4;
+        }
+
+        .kawaii footer::before {
+            content: "💖 ";
+        }
+
+        .kawaii footer::after {
+            content: " 💖";
+        }
+
+        .kawaii .inline-form input {
+            border: 2px solid #ffb6c1;
+        }
+
+        /* ===== GOTHIC THEME ===== */
+        body.gothic {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+            min-height: 100vh;
+            color: #b8b8d1;
+        }
+
+        .gothic header {
+            text-align: center;
+            padding: 30px 0;
+            background: linear-gradient(to right, #2d132c, #801336, #2d132c);
+            border-radius: 0 0 50px 50px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(128, 19, 54, 0.5);
+            border-bottom: 2px solid #c72c41;
+        }
+
+        .gothic header h1 {
+            color: #e8e8e8;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            font-size: 2.5em;
+            font-style: italic;
+        }
+
+        .gothic header h1::before {
+            content: "🦇 ";
+        }
+
+        .gothic header h1::after {
+            content: " 🦇";
+        }
+
+        .gothic nav a {
+            display: inline-block;
+            background: #1a1a2e;
+            color: #c72c41;
+            padding: 10px 25px;
+            margin: 5px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            border: 1px solid #c72c41;
+            box-shadow: 0 2px 10px rgba(199, 44, 65, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .gothic nav a:hover {
+            background: #2d132c;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(199, 44, 65, 0.4);
+        }
+
+        .gothic .card {
+            background: #1a1a2e;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            border: 1px solid #c72c41;
+        }
+
+        .gothic .card h2 {
+            color: #c72c41;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #801336;
+            padding-bottom: 10px;
+        }
+
+        .gothic .card h2::before {
+            content: "☠️ ";
+        }
+
+        .gothic .btn-primary {
+            background: linear-gradient(135deg, #801336, #c72c41);
+            color: #e8e8e8;
+            box-shadow: 0 4px 15px rgba(199, 44, 65, 0.4);
+        }
+
+        .gothic .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(199, 44, 65, 0.6);
+        }
+
+        .gothic .btn-secondary {
+            background: #1a1a2e;
+            color: #c72c41;
+            border: 1px solid #c72c41;
+        }
+
+        .gothic .btn-secondary:hover {
+            background: #2d132c;
+        }
+
+        .gothic .btn-danger {
+            background: linear-gradient(135deg, #4a0000, #8b0000);
+        }
+
+        .gothic .btn-success {
+            background: linear-gradient(135deg, #1e3a1e, #2d5a2d);
+        }
+
+        .gothic .form-group label {
+            color: #b8b8d1;
+        }
+
+        .gothic .form-group input {
+            background: #0f0f23;
+            border: 1px solid #801336;
+            color: #e8e8e8;
+        }
+
+        .gothic .form-group input:focus {
+            border-color: #c72c41;
+            box-shadow: 0 0 10px rgba(199, 44, 65, 0.3);
+        }
+
+        .gothic .warehouse-card {
+            background: #1a1a2e;
+            border: 1px solid #801336;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .gothic .warehouse-card:hover {
+            box-shadow: 0 8px 25px rgba(199, 44, 65, 0.3);
+            border-color: #c72c41;
+        }
+
+        .gothic .warehouse-card h3 {
+            color: #c72c41;
+        }
+
+        .gothic .warehouse-card h3::before {
+            content: "⚰️ ";
+        }
+
+        .gothic .warehouse-info {
+            background: #0f0f23;
+        }
+
+        .gothic .progress-bar {
+            background: #2d132c;
+        }
+
+        .gothic .progress-fill {
+            background: linear-gradient(to right, #801336, #c72c41);
+        }
+
+        .gothic .empty-state {
+            color: #b8b8d1;
+        }
+
+        .gothic .empty-state::before {
+            content: "🕷️";
+            font-size: 3em;
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        .gothic footer {
+            color: #801336;
+        }
+
+        .gothic footer::before {
+            content: "🖤 ";
+        }
+
+        .gothic footer::after {
+            content: " 🖤";
+        }
+
+        .gothic .inline-form input {
+            background: #0f0f23;
+            border: 1px solid #801336;
+            color: #e8e8e8;
+        }
+
+        /* ===== SHARED STYLES ===== */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        nav {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-family: inherit;
+        }
+
+        .gothic .btn {
+            border-radius: 5px;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a5a);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #98d8aa, #7bc98a);
+            color: white;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 15px;
+            font-size: 1em;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        .gothic .form-group input {
+            border-radius: 5px;
+        }
+
+        .form-group input:focus {
+            outline: none;
+        }
+
+        .warehouse-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .warehouse-card {
+            border-radius: 20px;
+            padding: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .gothic .warehouse-card {
+            border-radius: 10px;
+        }
+
+        .warehouse-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .warehouse-card h3 {
+            margin-bottom: 10px;
+        }
+
+        .warehouse-info {
+            padding: 15px;
+            border-radius: 15px;
+            margin: 15px 0;
+        }
+
+        .gothic .warehouse-info {
+            border-radius: 5px;
+        }
+
+        .warehouse-info p {
+            margin: 5px 0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+
+        .kawaii .fill-text {
+            color: #ff69b4;
+        }
+
+        .gothic .fill-text {
+            color: #c72c41;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .inline-form {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .inline-form input {
+            width: 120px;
+            padding: 8px 12px;
+            border-radius: 10px;
+        }
+
+        .gothic .inline-form input {
+            border-radius: 5px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 50px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 40px;
+        }
+
+        .theme-toggle {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 8px 20px;
+            margin: 5px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="{{ theme }}">
+    <header>
+        <h1>{% if theme == 'gothic' %}Gothic Warehouse{% else %}Kawaii Warehouse{% endif %}</h1>
+        <nav>
+            <a href="{{ url_for('index') }}">{% if theme == 'gothic' %}🏚️{% else %}🏠{% endif %} Home</a>
+            <a href="{{ url_for('create_warehouse') }}">{% if theme == 'gothic' %}🕯️{% else %}✨{% endif %} New Warehouse</a>
+            <a href="{{ url_for('toggle_theme') }}" class="theme-toggle">{% if theme == 'gothic' %}🌸 Switch to Kawaii{% else %}🦇 Switch to Gothic{% endif %}</a>
+        </nav>
+    </header>
+    
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer>
+        Made with {% if theme == 'gothic' %}darkness{% else %}love{% endif %}
+    </footer>
+</body>
+</html>

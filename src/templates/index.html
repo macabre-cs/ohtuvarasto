@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}{% if theme == 'gothic' %}Gothic Warehouse{% else %}Kawaii Warehouse{% endif %} - Home{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>My Warehouses</h2>
+    
+    {% if warehouses %}
+    <div class="warehouse-grid">
+        {% for warehouse_id, warehouse in warehouses.items() %}
+        <div class="warehouse-card">
+            <h3>{{ warehouse.name }}</h3>
+            <div class="warehouse-info">
+                <p>📊 Balance: {{ warehouse.varasto.saldo }}</p>
+                <p>📏 Capacity: {{ warehouse.varasto.tilavuus }}</p>
+                <p>📭 Free space: {{ warehouse.varasto.paljonko_mahtuu() }}</p>
+            </div>
+            {% set fill_percent = (warehouse.varasto.saldo / warehouse.varasto.tilavuus * 100) if warehouse.varasto.tilavuus > 0 else 0 %}
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: {{ fill_percent }}%"></div>
+            </div>
+            <div class="action-buttons">
+                <a href="{{ url_for('view_warehouse', warehouse_id=warehouse_id) }}" class="btn btn-primary">View {% if theme == 'gothic' %}🔮{% else %}👀{% endif %}</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <p>No warehouses yet!</p>
+        <p>Create your first {% if theme == 'gothic' %}dark{% else %}kawaii{% endif %} warehouse {% if theme == 'gothic' %}🕯️{% else %}✨{% endif %}</p>
+        <a href="{{ url_for('create_warehouse') }}" class="btn btn-primary" style="margin-top: 20px;">Create Warehouse {% if theme == 'gothic' %}⚰️{% else %}🎀{% endif %}</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
